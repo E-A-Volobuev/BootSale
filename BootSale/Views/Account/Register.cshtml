@@ -1,0 +1,28 @@
+﻿@model BootSale.Models.RegisterModel
+@{
+     Layout = "~/Views/Shared/RegLayout.cshtml";
+}
+
+<h2>Регистрация</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(false)
+    <h4>Электронный адрес</h4>
+    <div>
+        @Html.EditorFor(model => model.Email)
+    </div>
+    <h4>Пароль</h4>
+    <div>
+        @Html.EditorFor(model => model.Password)
+    </div>
+    <h4>Подтвердите пароль</h4>
+    <div>
+        @Html.EditorFor(model => model.PasswordConfirm)
+    </div>
+    <div>
+        <input type="submit" value="Зарегистрировать"/>
+    </div>
+
+}
+

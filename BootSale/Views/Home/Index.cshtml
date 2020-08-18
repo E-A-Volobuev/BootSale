@@ -1,0 +1,156 @@
+﻿@model BootSale.Models.IndexViewModel
+@using BootSale.Helpers
+
+
+
+<table class="table">
+    <tr>
+        <td>Модель</td>
+        <td>Цена</td>
+    </tr>
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>
+                    <img width="75" height="75" src="~/Files/@item.Image"/>
+             </td>
+
+            <td><a id='editItem' data-item=@item.Id onclick='EditItem(this);'>Редактировать</a></td>
+            <td><a id='delItem' data-item=@item.Id onclick='DeleteItem(this);'>Удалить</a></td>
+            @using (Html.BeginForm("AddToCart", "Cart"))
+            {
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery);
+                <td><a href="/Cart/AddToCart/@item.Id" type="submit" class="btn btn-success" />Добавить в корзину </td>
+
+            }
+
+        </tr>
+    }
+</table>
+<body>
+    <a href="/Home/AddItem" type="submit" class="btn btn-success">Добавить товар</a>
+</body>
+<br />
+<div class="btn-group">
+    @Html.PageLinks(Model.PagInfo, x => Url.Action("Index", new { page = x }))
+</div>
+
+<div id="tableBlock"></div>
+<div id="editBlock">
+    <p><b>Редактирование</b></p>
+    <table>
+        <tr><td><input type="hidden" id="editId" /></td><td></td></tr>
+        <tr><td><label>Название: </label></td><td><input type="text" id="editName" /></td></tr>
+        <tr><td><label>Цена: </label></td><td><input type="number" id="editPrice" /></td></tr>
+    </table>
+
+    <button id="edit">Сохранить</button>
+</div>
+
+
+
+
+<div id="errors" style="color:red;"></div>
+
+@Scripts.Render("~/bundles/jquery")
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+
+            $("#edit").click(function (event) {
+                event.preventDefault();
+                Edit();
+            });
+
+
+        });
+
+
+        // Удаление
+        function Delete(id) {
+
+            $.ajax({
+                url: '/api/products/' + id,
+                type: 'DELETE',
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert('Удалено!');
+                },
+                error: function (x, y) {
+                    alert(x + '\n' + y);
+                }
+            });
+        }
+        // редактирование
+        function Edit() {
+            var id = $('#editId').val()
+            // получаем новые значения для редактирования
+            var photo = {
+                Id: $('#editId').val(),
+                Name: $('#editName').val(),
+                Price: $('#editPrice').val(),
+            };
+            $.ajax({
+                url: '/api/products/' + id,
+                type: 'PUT',
+                data: JSON.stringify(photo),
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    alert('Отредактировано!');
+                },
+                error: function (x, y) {
+                    alert(x + '\n' + y);
+                }
+            });
+        }
+
+        // обработчик удаления
+        function DeleteItem (el) {
+            // получаем id удаляемого объекта
+            var id = $(el).attr('data-item');
+            Delete(id);
+        }
+
+        // обработчик редактирования
+        function EditItem(el) {
+            // получаем id редактируемого объекта
+            var id = $(el).attr('data-item');
+            GetProduct(id);
+        }
+
+        function Show(prod) {
+            if (prod != null) {
+                $("#editBlock").css('display', 'block');
+                $("#editId").val(prod.Id);
+                $("#editName").val(prod.Name);
+                $("#editPrice").val(prod.Price);
+            }
+            else {
+                alert("Такого фотоаппарата не существует");
+            }
+        }
+        // запрос объекта на редактирование
+        function GetProduct(id) {
+            $.ajax({
+                url: '/api/products/' + id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    Show(data);
+                },
+                error: function (x, y) {
+                    alert(x + '\n' + y);
+                }
+            });
+        }
+
+
+
+    </script>
+}

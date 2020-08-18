@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BootSale", "BootSale\BootSale.csproj", "{5760D088-BA30-4672-AE99-C9CB070650FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5760D088-BA30-4672-AE99-C9CB070650FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5760D088-BA30-4672-AE99-C9CB070650FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5760D088-BA30-4672-AE99-C9CB070650FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5760D088-BA30-4672-AE99-C9CB070650FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {219FFF12-A9C9-4361-8F09-2790B2EE78F5}
+	EndGlobalSection
+EndGlobal
